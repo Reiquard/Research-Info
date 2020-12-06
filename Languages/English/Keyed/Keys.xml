@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<RqRI_ITab_Label>Project</RqRI_ITab_Label>
+	<RqRI_CurrentProject>Current project: </RqRI_CurrentProject>
+	<RqRI_ResearchProgress>Research progress: </RqRI_ResearchProgress>
+	<RqRI_ProjectTechLevel>Project's tech level:</RqRI_ProjectTechLevel>
+	<RqRI_FactionTechLevel>Your faction tech level: </RqRI_FactionTechLevel>
+	<RqRI_ProjectCost>Project cost:</RqRI_ProjectCost>
+	<RqRI_ProjectCostMultiplied>Project cost multiplied by {0}:</RqRI_ProjectCostMultiplied>
+	<RqRI_ResearchSpeed>Current research speed:</RqRI_ResearchSpeed>
+	<RqRI_ResearchSpeedSoloDesc>The speed at which {0} is currently performing research:\n</RqRI_ResearchSpeedSoloDesc>
+	<RqRI_ToolTipDetails_Researcher>Researcher efficiency</RqRI_ToolTipDetails_Researcher><!-- Tooltip -->
+	<RqRI_ToolTipDetails_ResearchBench>Research bench factor</RqRI_ToolTipDetails_ResearchBench><!-- Tooltip -->
+	<RqRI_ResearchSpeedMultipleDesc>The speed at which these pawns are currently performing research:\n</RqRI_ResearchSpeedMultipleDesc>
+	<RqRI_TimeToComplete>Estimated time to complete: </RqRI_TimeToComplete>
+	<RqRI_TimeToCompleteDesc>Time required to complete this research under current conditions.</RqRI_TimeToCompleteDesc>
+	
+	<!-- Compatibility strings with other mods -->
+	<RqRI_NotCurrentlyInUse>This research bench is not currently in use.</RqRI_NotCurrentlyInUse><!-- InspectString -->
+	<RqRI_ToolTipDetails_PrerequisiteMultiplier>Related knowledge</RqRI_ToolTipDetails_PrerequisiteMultiplier><!-- Tooltip -->
+	<RqRI_LearningProgress>Learning progress: </RqRI_LearningProgress><!-- InspectString -->
+
+</LanguageData>

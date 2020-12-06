@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<RqRI_ITab_Label>项目详情</RqRI_ITab_Label>
+	<RqRI_CurrentProject>当前项目: </RqRI_CurrentProject>
+	<RqRI_ResearchProgress>项目进展: </RqRI_ResearchProgress>
+	<RqRI_ProjectTechLevel>项目所属科技水平:</RqRI_ProjectTechLevel>
+	<RqRI_FactionTechLevel>殖民地科技水平: </RqRI_FactionTechLevel>
+	<RqRI_ProjectCost>项目点数:</RqRI_ProjectCost>
+	<RqRI_ProjectCostMultiplied>项目点数倍率-{0}:</RqRI_ProjectCostMultiplied>
+	<RqRI_ResearchSpeed>当前研究速度:</RqRI_ResearchSpeed>
+	<RqRI_ResearchSpeedSoloDesc>这是 {0} 当前的研究速度:\n</RqRI_ResearchSpeedSoloDesc>
+	<RqRI_ToolTipDetails_Researcher>Researcher efficiency</RqRI_ToolTipDetails_Researcher><!-- Tooltip -->
+	<RqRI_ToolTipDetails_ResearchBench>Research bench factor</RqRI_ToolTipDetails_ResearchBench><!-- Tooltip -->
+	<RqRI_ResearchSpeedMultipleDesc>殖民者们当前的研究速度:\n</RqRI_ResearchSpeedMultipleDesc>
+	<RqRI_TimeToComplete>预估完成时间: </RqRI_TimeToComplete>
+	<RqRI_TimeToCompleteDesc>该项目在目前因素下的预估完成时间。</RqRI_TimeToCompleteDesc>
+	
+	<!-- Compatibility strings with other mods -->
+	<RqRI_NotCurrentlyInUse>This research bench is not currently in use.</RqRI_NotCurrentlyInUse><!-- InspectString -->
+	<RqRI_ToolTipDetails_PrerequisiteMultiplier>Related knowledge</RqRI_ToolTipDetails_PrerequisiteMultiplier><!-- Tooltip -->
+	<RqRI_LearningProgress>Learning progress: </RqRI_LearningProgress><!-- InspectString -->
+
+</LanguageData>

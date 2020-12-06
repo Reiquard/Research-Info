@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+
+	<RqRI_ITab_Label>Проект</RqRI_ITab_Label>
+	<RqRI_CurrentProject>Текущий проект: </RqRI_CurrentProject>
+	<RqRI_ResearchProgress>Прогресс исследования: </RqRI_ResearchProgress>
+	<RqRI_ProjectTechLevel>Технический уровень проекта:</RqRI_ProjectTechLevel>
+	<RqRI_FactionTechLevel>Ваш технический уровень: </RqRI_FactionTechLevel>
+	<RqRI_ProjectCost>Объём исследования:</RqRI_ProjectCost>
+	<RqRI_ProjectCostMultiplied>Объём исследования умножен на {0}:</RqRI_ProjectCostMultiplied>
+	<RqRI_ResearchSpeed>Текущая скорость исследования:</RqRI_ResearchSpeed>
+	<RqRI_ResearchSpeedSoloDesc>Скорость, с которой {0} в настоящее время проводит научные изыскания:\n</RqRI_ResearchSpeedSoloDesc>
+	<RqRI_ToolTipDetails_Researcher>Эффективность учёного</RqRI_ToolTipDetails_Researcher>
+	<RqRI_ToolTipDetails_ResearchBench>Стол для исследований</RqRI_ToolTipDetails_ResearchBench>
+	<RqRI_ResearchSpeedMultipleDesc>Скорость, с которой поселенцы в настоящее время проводят научные изыскания:\n</RqRI_ResearchSpeedMultipleDesc>
+	<RqRI_TimeToComplete>Ожидаемое время завершения: </RqRI_TimeToComplete>
+	<RqRI_TimeToCompleteDesc>Время, необходимое для завершения этого исследования при текущих условиях.</RqRI_TimeToCompleteDesc>
+	
+	<!-- Compatibility strings with other mods -->
+	<RqRI_NotCurrentlyInUse>Этот стол для исследований пока не используется.</RqRI_NotCurrentlyInUse>
+	<RqRI_ToolTipDetails_PrerequisiteMultiplier>Познания в смежных областях</RqRI_ToolTipDetails_PrerequisiteMultiplier>
+	<RqRI_LearningProgress>Прогресс обучения: </RqRI_LearningProgress>
+
+</LanguageData>
