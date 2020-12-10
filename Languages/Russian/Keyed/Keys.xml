@@ -18,6 +18,11 @@
 	
 	<!-- Compatibility strings with other mods -->
 	<RqRI_NotCurrentlyInUse>Этот стол для исследований пока не используется.</RqRI_NotCurrentlyInUse>
+	<RqRI_TechLevelDifference>Множитель скорости из-за сложности:</RqRI_TechLevelDifference>
+	<RqRI_TechLevelDifferenceDesc>{0} обладает знаниями, уровень которых - {1}, в то время как технический уровень проекта - {2}.</RqRI_TechLevelDifferenceDesc>
+	<RqRI_ToolTipDetails_TechLevelMultiplier>Сложность в освоении</RqRI_ToolTipDetails_TechLevelMultiplier>
+	<RqRI_PrerequisiteMultiplier>Множитель скорости за счёт схожих знаний:</RqRI_PrerequisiteMultiplier>
+	<RqRI_PrerequisiteMultiplierDesc>{0} обладает знаниями в более сложных смежных областях.</RqRI_PrerequisiteMultiplierDesc>
 	<RqRI_ToolTipDetails_PrerequisiteMultiplier>Познания в смежных областях</RqRI_ToolTipDetails_PrerequisiteMultiplier>
 	<RqRI_LearningProgress>Прогресс обучения: </RqRI_LearningProgress>
 

@@ -9,18 +9,27 @@ namespace ResearchInfo
 	{
 		private Utilities _util = new Utilities();
 		private Vector2 _scrollPosition = Vector2.zero;
-		private Pawn _userpawn => _util.ListOfPawnsCurrentlyPerformingResearch().Where(x => x.CurJob.targetA.Thing == SelThing).FirstOrDefault();
+		private Pawn _userpawn => _util.ListOfOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == SelThing).FirstOrDefault();
 		private ResearchProjectDef _curProj => GetCurProj();
 		public override bool IsVisible => Visible();
+		private bool _HR_TechLevelDifference => ResearchInfo.modHumanResources && (_curProj.CostFactor(Aux_HR.HRTechLevel(_userpawn)) != 1f);
+		private bool _HR_PrerequisiteMultiplier => ResearchInfo.modHumanResources && (Aux_HR.HRPrerequisiteMultiplier(_curProj, _userpawn) != 1f);
+
+		protected override void UpdateSize()
+		{
+			base.UpdateSize();
+			size = _HR_TechLevelDifference && _HR_PrerequisiteMultiplier ? new Vector2(432f, 339f)
+				: (_HR_TechLevelDifference ^ _HR_PrerequisiteMultiplier ? new Vector2(432f, 317f) : new Vector2(432f, 295f));
+		}
 
 		private ResearchProjectDef GetCurProj()
 		{
 			if (ResearchInfo.clean)
 				return Find.ResearchManager.currentProj;
 			if (_userpawn != null && ResearchInfo.modHumanResources)
-				return Utilities_HR.HRCurrentProject(_userpawn);
+				return Aux_HR.HRCurrentProject(_userpawn);
 			if (_userpawn != null && ResearchInfo.modPawnsChooseResearch && !ResearchInfo.modHumanResources)
-				return Utilities_PCR.PCRCurrentProject(_userpawn);
+				return Aux_PCR.PCRCurrentProject(_userpawn);
 			return null;
 		}
 		private bool Visible()
@@ -33,7 +42,6 @@ namespace ResearchInfo
 		}
 		public RI_ITab()
 		{
-			size = new Vector2(432f, 290f);
 			labelKey = "RqRI_ITab_Label".Translate();
 		}
 		protected override void FillTab()
@@ -70,9 +78,9 @@ namespace ResearchInfo
 			curY += 10f;
 
 			/* Begin of Details */
-			float detailsY = 150f;
+			float detailsY = 164f;
 			float stringPos = 0f;
-			float stringHeight = 21f;
+			float stringHeight = 22f;
 			Rect rectProjectDetails = new Rect(10f, curY, size.x - 30f, detailsY);
 			GUI.BeginGroup(rectProjectDetails);
 
@@ -90,7 +98,8 @@ namespace ResearchInfo
 				if (Mouse.IsOver(rectProjectTechLevel))
 				{
 					GUI.DrawTexture(rectProjectTechLevel, TexUI.HighlightTex);
-					TooltipHandler.TipRegion(rectProjectTechLevel, "RqRI_FactionTechLevel".Translate() + Faction.OfPlayer.def.techLevel.ToStringHuman().CapitalizeFirst());
+					TooltipHandler.TipRegion(rectProjectTechLevel, "RqRI_FactionTechLevel".Translate()
+						+ Faction.OfPlayer.def.techLevel.ToStringHuman().CapitalizeFirst());
 				}
 			}
 			Text.Anchor = TextAnchor.MiddleRight;
@@ -106,12 +115,14 @@ namespace ResearchInfo
 			else
 			{
 				Text.CurFontStyle.fontStyle = FontStyle.Italic;
-				Widgets.Label(rectProjectCost, "RqRI_ProjectCostMultiplied".Translate((_curProj.CostFactor(Faction.OfPlayer.def.techLevel)).ToStringPercent()));
+				Widgets.Label(rectProjectCost,
+					"RqRI_ProjectCostMultiplied".Translate((_curProj.CostFactor(Faction.OfPlayer.def.techLevel)).ToStringPercent()));
 				Text.CurFontStyle.fontStyle = FontStyle.Normal;
 				if (Mouse.IsOver(rectProjectCost))
 				{
 					GUI.DrawTexture(rectProjectCost, TexUI.HighlightTex);
-					TooltipHandler.TipRegion(rectProjectCost, "ResearchCostComparison".Translate(_curProj.baseCost.ToString("F0"), _curProj.CostApparent.ToString("F0")));
+					TooltipHandler.TipRegion(rectProjectCost,
+						"ResearchCostComparison".Translate(_curProj.baseCost.ToString("F0"), _curProj.CostApparent.ToString("F0")));
 				}
 			}
 			Text.Anchor = TextAnchor.MiddleRight;
@@ -124,44 +135,95 @@ namespace ResearchInfo
 			Text.Anchor = TextAnchor.MiddleRight;
 			if (ResearchInfo.modHumanResources)
 			{
-				Widgets.Label(rectResearchProgress, Utilities_HR.HRExpertise(_userpawn)[_curProj].ToStringPercent("F1"));
+				Widgets.Label(rectResearchProgress, Aux_HR.HRExpertise(_userpawn)[_curProj].ToStringPercent("F1"));
 			}
 			else
 			{
-				Widgets.Label(rectResearchProgress, _curProj.ProgressApparent.ToString("F0") + " / " + _curProj.CostApparent.ToString("F0") + $" ({_curProj.ProgressPercent.ToStringPercent("F1")})");
+				Widgets.Label(rectResearchProgress, _curProj.ProgressApparent.ToString("F0")
+					+ " / " + _curProj.CostApparent.ToString("F0") + $" ({_curProj.ProgressPercent.ToStringPercent("F1")})");
 			}
 			stringPos += stringHeight;
 
+			if (_HR_TechLevelDifference)
+			{
+				Rect rectTechLevelDifference = new Rect(0f, stringPos, rectProjectDetails.width, stringHeight);
+				Text.Anchor = TextAnchor.MiddleLeft;
+				Text.CurFontStyle.fontStyle = FontStyle.Italic;
+				Widgets.Label(rectTechLevelDifference, "RqRI_TechLevelDifference".Translate());
+				Text.CurFontStyle.fontStyle = FontStyle.Normal;
+				if (Mouse.IsOver(rectTechLevelDifference))
+				{
+					GUI.DrawTexture(rectTechLevelDifference, TexUI.HighlightTex);
+					TooltipHandler.TipRegion(rectTechLevelDifference, "RqRI_TechLevelDifferenceDesc".Translate(_userpawn.NameShortColored,
+						Aux_HR.HRTechLevel(_userpawn).ToStringHuman(), _curProj.techLevel.ToStringHuman()));
+				}
+				Text.Anchor = TextAnchor.MiddleRight;
+				Widgets.Label(rectTechLevelDifference, (1 / _curProj.CostFactor(Aux_HR.HRTechLevel(_userpawn))).ToStringPercent("F0"));
+				stringPos += stringHeight;
+			}
+
+			if (_HR_PrerequisiteMultiplier)
+			{
+				Rect rectPrerequisiteMultiplier = new Rect(0f, stringPos, rectProjectDetails.width, stringHeight);
+				Text.Anchor = TextAnchor.MiddleLeft;
+				Text.CurFontStyle.fontStyle = FontStyle.Italic;
+				Widgets.Label(rectPrerequisiteMultiplier, "RqRI_PrerequisiteMultiplier".Translate());
+				Text.CurFontStyle.fontStyle = FontStyle.Normal;
+				if (Mouse.IsOver(rectPrerequisiteMultiplier))
+				{
+					GUI.DrawTexture(rectPrerequisiteMultiplier, TexUI.HighlightTex);
+					TooltipHandler.TipRegion(rectPrerequisiteMultiplier, "RqRI_PrerequisiteMultiplierDesc".Translate(_userpawn.NameShortColored));
+				}
+				Text.Anchor = TextAnchor.MiddleRight;
+				Widgets.Label(rectPrerequisiteMultiplier, (Aux_HR.HRPrerequisiteMultiplier(_curProj, _userpawn)).ToStringPercent("F0"));
+				stringPos += stringHeight;
+			}
+
 			Rect rectResearchSpeed = new Rect(0f, stringPos, rectProjectDetails.width, stringHeight);
 			Text.Anchor = TextAnchor.MiddleLeft;
-			if (_util.CurrentResearchersOfProject(_curProj) > 0)
+			if (!ResearchInfo.modHumanResources)
+			{
+				if (_util.NumberOfCurrentResearchersOfGivenProject(_curProj) > 0)
+				{
+					Text.CurFontStyle.fontStyle = FontStyle.Italic;
+					Widgets.Label(rectResearchSpeed, "RqRI_ResearchSpeed".Translate());
+					Text.CurFontStyle.fontStyle = FontStyle.Normal;
+					if (_util.NumberOfCurrentResearchersOfGivenProject(_curProj) == 1 && Mouse.IsOver(rectResearchSpeed))
+					{
+						GUI.DrawTexture(rectResearchSpeed, TexUI.HighlightTex);
+						TooltipHandler.TipRegion(rectResearchSpeed, "RqRI_ResearchSpeedSoloDesc".Translate(_userpawn.NameShortColored)
+							+ _util.ToolTipResearchSpeedDetails(_curProj, _userpawn));
+					}
+					if (_util.NumberOfCurrentResearchersOfGivenProject(_curProj) > 1 && Mouse.IsOver(rectResearchSpeed))
+					{
+						GUI.DrawTexture(rectResearchSpeed, TexUI.HighlightTex);
+						TooltipHandler.TipRegion(rectResearchSpeed, "RqRI_ResearchSpeedMultipleDesc".Translate() + _util.ToolTipNamesList(_curProj));
+					}
+				}
+				else
+				{
+					Widgets.Label(rectResearchSpeed, "RqRI_ResearchSpeed".Translate());
+				}
+			}
+			else
 			{
 				Text.CurFontStyle.fontStyle = FontStyle.Italic;
 				Widgets.Label(rectResearchSpeed, "RqRI_ResearchSpeed".Translate());
 				Text.CurFontStyle.fontStyle = FontStyle.Normal;
-				if (_util.CurrentResearchersOfProject(_curProj) == 1 && Mouse.IsOver(rectResearchSpeed))
+				if (Mouse.IsOver(rectResearchSpeed))
 				{
 					GUI.DrawTexture(rectResearchSpeed, TexUI.HighlightTex);
-					TooltipHandler.TipRegion(rectResearchSpeed, "RqRI_ResearchSpeedSoloDesc".Translate(_util.dictCurrentResearchers.Keys.First().NameShortColored)
+					TooltipHandler.TipRegion(rectResearchSpeed, "RqRI_ResearchSpeedSoloDesc".Translate(_userpawn.NameShortColored)
 						+ _util.ToolTipResearchSpeedDetails(_curProj, _userpawn));
 				}
-				if (_util.CurrentResearchersOfProject(_curProj) > 1 && Mouse.IsOver(rectResearchSpeed))
-				{
-					GUI.DrawTexture(rectResearchSpeed, TexUI.HighlightTex);
-					TooltipHandler.TipRegion(rectResearchSpeed, "RqRI_ResearchSpeedMultipleDesc".Translate() + _util.ToolTipNamesList());
-				}
-			}
-			else
-			{
-				Widgets.Label(rectResearchSpeed, "RqRI_ResearchSpeed".Translate());
 			}
 			Text.Anchor = TextAnchor.MiddleRight;
-			Widgets.Label(rectResearchSpeed, _util.GetResearchSpeedPerProject(_curProj, _userpawn).ToStringPercent("F1"));
+			Widgets.Label(rectResearchSpeed, _util.ResearchSpeedForGivenProject(_curProj, _userpawn).ToStringPercent("F1"));
 			stringPos += stringHeight;
 
 			Rect rectTimeToComplete = new Rect(0f, stringPos, rectProjectDetails.width, stringHeight);
 			Text.Anchor = TextAnchor.MiddleLeft;
-			if (_util.GetResearchSpeedPerProject(_curProj, _userpawn) > 0)
+			if (_util.ResearchSpeedForGivenProject(_curProj, _userpawn) > 0)
 			{
 				Text.CurFontStyle.fontStyle = FontStyle.Italic;
 				Widgets.Label(rectTimeToComplete, "RqRI_TimeToComplete".Translate());

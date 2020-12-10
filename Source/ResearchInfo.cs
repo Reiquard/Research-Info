@@ -14,13 +14,13 @@ namespace ResearchInfo
 		static ResearchInfo()
 		{
 			Instance.PatchAll();
-			if (LoadedModManager.RunningModsListForReading.Any((ModContentPack x) => x.PackageIdPlayerFacing == "Cozarkian.PawnsChooseResearch"))
+			if (ModLister.GetActiveModWithIdentifier("Cozarkian.PawnsChooseResearch") != null)
 			{
 				clean = false;
 				modPawnsChooseResearch = true;
 				_message = "'Pawns Choose Research'.";
 			}
-			if (LoadedModManager.RunningModsListForReading.Any((ModContentPack x) => x.PackageIdPlayerFacing == "JPT.HumanResources"))
+			if (ModLister.GetActiveModWithIdentifier("JPT.HumanResources") != null)
 			{
 				clean = false;
 				modHumanResources = true;

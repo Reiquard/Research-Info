@@ -18,6 +18,11 @@
 	
 	<!-- Compatibility strings with other mods -->
 	<RqRI_NotCurrentlyInUse>This research bench is not currently in use.</RqRI_NotCurrentlyInUse><!-- InspectString -->
+	<RqRI_TechLevelDifference>Research speed multiplier due to complexity:</RqRI_TechLevelDifference>
+	<RqRI_TechLevelDifferenceDesc>{0}'s knowledge is at the {1} level, but this project's tech level is {2}.</RqRI_TechLevelDifferenceDesc>
+	<RqRI_ToolTipDetails_TechLevelMultiplier>Research complexity</RqRI_ToolTipDetails_TechLevelMultiplier><!-- Tooltip -->
+	<RqRI_PrerequisiteMultiplier>Research speed multiplier due to related knowledge:</RqRI_PrerequisiteMultiplier>
+	<RqRI_PrerequisiteMultiplierDesc>{0} has knowledge in more complex associated fields.</RqRI_PrerequisiteMultiplierDesc>
 	<RqRI_ToolTipDetails_PrerequisiteMultiplier>Related knowledge</RqRI_ToolTipDetails_PrerequisiteMultiplier><!-- Tooltip -->
 	<RqRI_LearningProgress>Learning progress: </RqRI_LearningProgress><!-- InspectString -->
 

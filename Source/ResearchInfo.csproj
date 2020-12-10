@@ -71,8 +71,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResearchInfo.cs" />
     <Compile Include="RI_ITab.cs" />
-    <Compile Include="Utilities_HR.cs" />
-    <Compile Include="Utilities_PCR.cs" />
+    <Compile Include="Aux_HR.cs" />
+    <Compile Include="Aux_PCR.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

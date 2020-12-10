@@ -9,7 +9,6 @@ namespace ResearchInfo
 {
     public class Utilities
     {
-        public Dictionary<Pawn, float> dictCurrentResearchers = new Dictionary<Pawn, float>();
         public string InspectStringInfo(Thing thing, bool study = false)
         {
             StringBuilder sb = new StringBuilder();
@@ -17,13 +16,13 @@ namespace ResearchInfo
             if (study)
             {
                 string text = string.Empty;
-                Pawn pawn = ListOfPawnsCurrentlyPerformingResearch(study: true).Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
+                Pawn pawn = ListOfOfCurrentResearchers(study: true).Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
                 if (pawn != null)
                 {
-                    curProj = Utilities_HR.HRCurrentProject(pawn);
+                    curProj = Aux_HR.HRCurrentProject(pawn);
                     text = "RqRI_CurrentProject".Translate() + curProj.LabelCap;
                     text += "\n";
-                    text += "RqRI_LearningProgress".Translate() + Utilities_HR.HRExpertise(pawn)[curProj].ToStringPercent("F0");
+                    text += "RqRI_LearningProgress".Translate() + Aux_HR.HRExpertise(pawn)[curProj].ToStringPercent("F0");
                     text += "\n";
                     text += "RqRI_TimeToComplete".Translate() + TimeToCompleteLearning(curProj, pawn);
                 }
@@ -37,7 +36,9 @@ namespace ResearchInfo
                 if (curProj != null)
                 {
                     sb.Append(curProj.LabelCap);
-                    sb.AppendInNewLine("RqRI_ResearchProgress".Translate() + curProj.ProgressApparent.ToString("F0") + " / " + curProj.CostApparent.ToString("F0") + $" ({curProj.ProgressPercent.ToStringPercent("F1")})");
+                    sb.AppendInNewLine("RqRI_ResearchProgress".Translate() + 
+                        curProj.ProgressApparent.ToString("F0") + " / " + 
+                        curProj.CostApparent.ToString("F0") + $" ({curProj.ProgressPercent.ToStringPercent("F1")})");
                     if (TimeToCompleteResearch(curProj) != "-")
                     {
                         sb.AppendInNewLine("RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj));
@@ -52,13 +53,13 @@ namespace ResearchInfo
             if (ResearchInfo.modHumanResources)
             {
                 string text = "RqRI_NotCurrentlyInUse".Translate();
-                Pawn pawn = ListOfPawnsCurrentlyPerformingResearch().Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
+                Pawn pawn = ListOfOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
                 if (pawn != null)
                 {
-                    curProj = Utilities_HR.HRCurrentProject(pawn);
+                    curProj = Aux_HR.HRCurrentProject(pawn);
                     text = "RqRI_CurrentProject".Translate() + curProj.LabelCap;
                     text += "\n";
-                    text += "RqRI_ResearchProgress".Translate() + Utilities_HR.HRExpertise(pawn)[curProj].ToStringPercent("F1");
+                    text += "RqRI_ResearchProgress".Translate() + Aux_HR.HRExpertise(pawn)[curProj].ToStringPercent("F1");
                     text += "\n";
                     text += "RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj, pawn);
                 }
@@ -68,13 +69,15 @@ namespace ResearchInfo
             if (ResearchInfo.modPawnsChooseResearch && !ResearchInfo.modHumanResources)
             {
                 string text = "RqRI_NotCurrentlyInUse".Translate();
-                Pawn pawn = ListOfPawnsCurrentlyPerformingResearch().Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
+                Pawn pawn = ListOfOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
                 if (pawn != null)
                 {
-                    curProj = Utilities_PCR.PCRCurrentProject(pawn);
+                    curProj = Aux_PCR.PCRCurrentProject(pawn);
                     text = "RqRI_CurrentProject".Translate() + curProj.LabelCap;
                     text += "\n";
-                    text += "RqRI_ResearchProgress".Translate() + curProj.ProgressApparent.ToString("F0") + " / " + curProj.CostApparent.ToString("F0") + $" ({curProj.ProgressPercent.ToStringPercent("F1")})";
+                    text += "RqRI_ResearchProgress".Translate() + 
+                        curProj.ProgressApparent.ToString("F0") + " / " + 
+                        curProj.CostApparent.ToString("F0") + $" ({curProj.ProgressPercent.ToStringPercent("F1")})";
                     text += "\n";
                     text += "RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj);
                 }
@@ -83,131 +86,108 @@ namespace ResearchInfo
             }
             return string.Empty;
         }
-        public List<Pawn> ListOfPawnsCurrentlyPerformingResearch(bool study = false)
+        public List<Pawn> ListOfOfCurrentResearchers(bool study = false)
         {
             if (ResearchInfo.modHumanResources)
             {
                 if (study)
-                    return PawnsFinder.AllMaps_FreeColonistsSpawned.Where(x => x.CurJobDef == Utilities_HR.LearnTech && x.Position == x.CurJob.targetA.Thing.InteractionCell).ToList();
+                    return PawnsFinder.AllMaps_FreeColonistsSpawned.
+                        Where(x => x.CurJobDef == Aux_HR.LearnTech && x.Position == x.CurJob.targetA.Thing.InteractionCell).ToList();
                 else
-                    return PawnsFinder.AllMaps_FreeColonistsSpawned.Where(x => x.CurJobDef == Utilities_HR.ResearchTech && x.Position == x.CurJob.targetA.Thing.InteractionCell).ToList();
+                    return PawnsFinder.AllMaps_FreeColonistsSpawned.
+                        Where(x => x.CurJobDef == Aux_HR.ResearchTech && x.Position == x.CurJob.targetA.Thing.InteractionCell).ToList();
             }
             else
-                return PawnsFinder.AllMaps_FreeColonistsSpawned.Where(x => x.CurJobDef == JobDefOf.Research && x.Position == x.CurJob.targetA.Thing.InteractionCell).ToList();
+                return PawnsFinder.AllMaps_FreeColonistsSpawned.
+                    Where(x => x.CurJobDef == JobDefOf.Research && x.Position == x.CurJob.targetA.Thing.InteractionCell).ToList();
         }
-        public float GetResearchSpeedPerProject(ResearchProjectDef curProj, Pawn pawn)
+        public float ResearchSpeedForGivenProject(ResearchProjectDef curProj, Pawn pawn)
         {
-            float researchSpeedPerProject = 0f;
             if (ResearchInfo.clean)
-            {
-                dictCurrentResearchers.Clear();
-                if (ListOfPawnsCurrentlyPerformingResearch().Count <= 0)
-                {
-                    return 0f;
-                }
-                for (int i = 0; i < ListOfPawnsCurrentlyPerformingResearch().Count; i++)
-                {
-                    dictCurrentResearchers.Add(ListOfPawnsCurrentlyPerformingResearch().ElementAt(i), ListOfPawnsCurrentlyPerformingResearch().ElementAt(i).GetStatValue(StatDefOf.ResearchSpeed) * ListOfPawnsCurrentlyPerformingResearch().ElementAt(i).CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor));
-                    researchSpeedPerProject += ListOfPawnsCurrentlyPerformingResearch().ElementAt(i).GetStatValue(StatDefOf.ResearchSpeed) * ListOfPawnsCurrentlyPerformingResearch().ElementAt(i).CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor);
-                }
-            }
+                return ListOfOfCurrentResearchers().
+                    Select(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)).
+                    Sum();
             if (ResearchInfo.modHumanResources)
             {
-                researchSpeedPerProject = pawn.GetStatValue(StatDefOf.ResearchSpeed)
+                return pawn.GetStatValue(StatDefOf.ResearchSpeed)
                     * pawn.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)
-                    * Utilities_HR.HRPrerequisiteMultiplier(curProj, pawn);
+                    * Aux_HR.HRPrerequisiteMultiplier(curProj, pawn)
+                    / curProj.CostFactor(Aux_HR.HRTechLevel(pawn));
             }
             if (ResearchInfo.modPawnsChooseResearch && !ResearchInfo.modHumanResources)
-            {
-                for (int i = 0; i < ListOfPawnsCurrentlyPerformingResearch().Count; i++)
-                {
-                    if (Utilities_PCR.PCRCurrentProject(ListOfPawnsCurrentlyPerformingResearch().ElementAt(i)) == curProj)
-                    {
-                        researchSpeedPerProject += ListOfPawnsCurrentlyPerformingResearch().ElementAt(i).GetStatValue(StatDefOf.ResearchSpeed) * ListOfPawnsCurrentlyPerformingResearch().ElementAt(i).CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor);
-                    }
-                }
-            }
-            return researchSpeedPerProject;
+                return ListOfOfCurrentResearchers().
+                    Where(p => Aux_PCR.PCRCurrentProject(p) == curProj).
+                    Select(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)).
+                    Sum();
+            return 0f;
         }
-        public int CurrentResearchersOfProject(ResearchProjectDef curProj)
+        public byte NumberOfCurrentResearchersOfGivenProject(ResearchProjectDef curProj)
         {
             if (ResearchInfo.clean)
-            {
-                return dictCurrentResearchers.Count;
-            }
-            if (ResearchInfo.modHumanResources)
-            {
-                dictCurrentResearchers.Clear();
-                int counter = 0;
-                for (int i = 0; i < ListOfPawnsCurrentlyPerformingResearch().Count; i++)
-                {
-                    if (Utilities_HR.HRCurrentProject(ListOfPawnsCurrentlyPerformingResearch().ElementAt(i)) == curProj)
-                    {
-                        counter++;
-                        dictCurrentResearchers.Add(ListOfPawnsCurrentlyPerformingResearch().ElementAt(i), ListOfPawnsCurrentlyPerformingResearch().ElementAt(i).GetStatValue(StatDefOf.ResearchSpeed) * ListOfPawnsCurrentlyPerformingResearch().ElementAt(i).CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor));
-                    }
-                }
-                return counter;
-            }
+                return (byte)ListOfOfCurrentResearchers().Count;
             if (ResearchInfo.modPawnsChooseResearch && !ResearchInfo.modHumanResources)
-            {
-                dictCurrentResearchers.Clear();
-                int counter = 0;
-                for (int i = 0; i < ListOfPawnsCurrentlyPerformingResearch().Count; i++)
-                {
-                    if (Utilities_PCR.PCRCurrentProject(ListOfPawnsCurrentlyPerformingResearch().ElementAt(i)) == curProj)
-                    {
-                        counter++;
-                        dictCurrentResearchers.Add(ListOfPawnsCurrentlyPerformingResearch().ElementAt(i), ListOfPawnsCurrentlyPerformingResearch().ElementAt(i).GetStatValue(StatDefOf.ResearchSpeed) * ListOfPawnsCurrentlyPerformingResearch().ElementAt(i).CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor));
-                    }
-                }
-                return counter;
-            }
+                return (byte)ListOfOfCurrentResearchers().Where(p => Aux_PCR.PCRCurrentProject(p) == curProj).Count();
             return 0;
         }
         public string TimeToCompleteResearch(ResearchProjectDef curProj, Pawn pawn = null)
         {
-            if (GetResearchSpeedPerProject(curProj, pawn) <= 0)
+            if (ResearchSpeedForGivenProject(curProj, pawn) <= 0)
                 return "-";
             float hoursToComplete;
             if (ResearchInfo.modHumanResources)
             {
-                hoursToComplete = ((1 - Utilities_HR.HRExpertise(pawn)[curProj]) * curProj.CostApparent / (GetResearchSpeedPerProject(curProj, pawn) * Utilities_HR.HRResearchPointsPerWorkTick * 2500 * (DebugSettings.fastResearch ? 500f : 1f)));
+                hoursToComplete = ((1 - Aux_HR.HRExpertise(pawn)[curProj]) * curProj.CostApparent /
+                    (ResearchSpeedForGivenProject(curProj, pawn) * curProj.CostFactor(pawn.Faction.def.techLevel) * Aux_HR.HRResearchPointsPerWorkTick * 2500 * (DebugSettings.fastResearch ? 500f : 1f)));
             }
             else
             {
-                hoursToComplete = (curProj.CostApparent - curProj.ProgressApparent) / (GetResearchSpeedPerProject(curProj, pawn) * 0.00825f * 2500 * Find.Storyteller.difficultyValues.researchSpeedFactor * (DebugSettings.fastResearch ? 500f : 1f));
+                hoursToComplete = (curProj.CostApparent - curProj.ProgressApparent) /
+                    (ResearchSpeedForGivenProject(curProj, pawn) * 0.00825f * 2500 * Find.Storyteller.difficultyValues.researchSpeedFactor * (DebugSettings.fastResearch ? 500f : 1f));
             }
             TimeSpan time = TimeSpan.FromHours(hoursToComplete);
-            return (time.Days > 0 ? $"{time.Days.ToString() + "LetterDay".Translate()} " : "") + (time.Hours > 0 ? $"{time.Hours.ToString() + "LetterHour".Translate()} " : "") + ($"{time.Minutes.ToString() + "LetterMinute".Translate()}");
+            return (time.Days > 0 ? $"{time.Days.ToString() + "LetterDay".Translate()} " : "") +
+                (time.Hours > 0 ? $"{time.Hours.ToString() + "LetterHour".Translate()} " : "") +
+                ($"{time.Minutes.ToString() + "LetterMinute".Translate()}");
         }
         public string TimeToCompleteLearning(ResearchProjectDef curProj, Pawn pawn = null)
         {
-            float hoursToComplete;
-            hoursToComplete = ((1 - Utilities_HR.HRExpertise(pawn)[curProj]) * pawn.CurJob.bill.recipe.workAmount * Utilities_HR.HRStuffCostFactor(curProj) / (GetResearchSpeedPerProject(curProj, pawn) * Utilities_HR.HRStudyPointsPerWorkTick * 2500 * (DebugSettings.fastResearch ? 500f : 1f)));
+            float hoursToComplete = ((1 - Aux_HR.HRExpertise(pawn)[curProj]) * pawn.CurJob.bill.recipe.workAmount * Aux_HR.HRStuffCostFactor(curProj) /
+                (ResearchSpeedForGivenProject(curProj, pawn) * Aux_HR.HRStudyPointsPerWorkTick * 2500 * (DebugSettings.fastResearch ? 500f : 1f)));
             TimeSpan time = TimeSpan.FromHours(hoursToComplete);
-            return (time.Days > 0 ? $"{time.Days.ToString() + "LetterDay".Translate()} " : "") + (time.Hours > 0 ? $"{time.Hours.ToString() + "LetterHour".Translate()} " : "") + ($"{time.Minutes.ToString() + "LetterMinute".Translate()}");
+            return (time.Days > 0 ? $"{time.Days.ToString() + "LetterDay".Translate()} " : "") +
+                (time.Hours > 0 ? $"{time.Hours.ToString() + "LetterHour".Translate()} " : "") +
+                ($"{time.Minutes.ToString() + "LetterMinute".Translate()}");
         }
-        public string ToolTipNamesList()
+        public string ToolTipNamesList(ResearchProjectDef curProj)
         {
+            Dictionary<float, Pawn> d = new Dictionary<float, Pawn>();
+            if (ResearchInfo.clean)
+                d = ListOfOfCurrentResearchers().
+                    OrderByDescending(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)).
+                    ToDictionary(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor));
+            if (ResearchInfo.modPawnsChooseResearch && !ResearchInfo.modHumanResources)
+                d = ListOfOfCurrentResearchers().
+                    Where(p => Aux_PCR.PCRCurrentProject(p) == curProj).
+                    OrderByDescending(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)).
+                    ToDictionary(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor));
             string names = string.Empty;
-            dictCurrentResearchers = dictCurrentResearchers.OrderByDescending(pair => pair.Value).ToDictionary(pair => pair.Key, pair => pair.Value);
-            for (int i = 0; i < dictCurrentResearchers.Count; i++)
+            for (int i = 0; i < d.Count; i++)
             {
-                names += $"\n{dictCurrentResearchers.Keys.ElementAt(i).NameShortColored}: {dictCurrentResearchers.Values.ElementAt(i).ToStringPercent("F1")}";
+                names += $"\n{d.Values.ElementAt(i).NameShortColored}: {d.Keys.ElementAt(i).ToStringPercent("F1")}";
             }
             return names;
         }
         public string ToolTipResearchSpeedDetails(ResearchProjectDef project, Pawn pawn)
         {
-            string details = string.Empty;
-            details += $"\n{(pawn.GetStatValue(StatDefOf.ResearchSpeed).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_Researcher".Translate()).Truncate(260f)}";
-            details += $"\n{(pawn.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_ResearchBench".Translate()).Truncate(260f)}";
-            if (ResearchInfo.modHumanResources && Utilities_HR.HRPrerequisiteMultiplier(project, pawn) != 1f)
+            string text = string.Empty;
+            text += $"\n{(pawn.GetStatValue(StatDefOf.ResearchSpeed).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_Researcher".Translate()).Truncate(260f)}";
+            text += $"\n{(pawn.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_ResearchBench".Translate()).Truncate(260f)}";
+            if (ResearchInfo.modHumanResources)
             {
-                details += $"\n{(Utilities_HR.HRPrerequisiteMultiplier(project, pawn).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_PrerequisiteMultiplier".Translate()).Truncate(260f)}";
+                text += Aux_HR.HRPrerequisiteMultiplier(project, pawn) != 1f ? $"\n{(Aux_HR.HRPrerequisiteMultiplier(project, pawn).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_PrerequisiteMultiplier".Translate()).Truncate(260f)}" : "";
+                text += project.CostFactor(Aux_HR.HRTechLevel(pawn)) != 1f ? $"\n{((1 / project.CostFactor(Aux_HR.HRTechLevel(pawn))).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_TechLevelMultiplier".Translate()).Truncate(260f)}" : "";
             }
-            return details;
+            return text;
         }
     }
 }
