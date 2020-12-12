@@ -15,7 +15,7 @@
 	<RqRI_ResearchSpeedMultipleDesc>Скорость, с которой поселенцы в настоящее время проводят научные изыскания:\n</RqRI_ResearchSpeedMultipleDesc>
 	<RqRI_TimeToComplete>Ожидаемое время завершения: </RqRI_TimeToComplete>
 	<RqRI_TimeToCompleteDesc>Время, необходимое для завершения этого исследования при текущих условиях.</RqRI_TimeToCompleteDesc>
-	
+
 	<!-- Compatibility strings with other mods -->
 	<RqRI_NotCurrentlyInUse>Этот стол для исследований пока не используется.</RqRI_NotCurrentlyInUse>
 	<RqRI_TechLevelDifference>Множитель скорости из-за сложности:</RqRI_TechLevelDifference>

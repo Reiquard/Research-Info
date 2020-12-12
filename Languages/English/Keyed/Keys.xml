@@ -4,7 +4,7 @@
 	<RqRI_ITab_Label>Project</RqRI_ITab_Label>
 	<RqRI_CurrentProject>Current project: </RqRI_CurrentProject>
 	<RqRI_ResearchProgress>Research progress: </RqRI_ResearchProgress>
-	<RqRI_ProjectTechLevel>Project's tech level:</RqRI_ProjectTechLevel>
+	<RqRI_ProjectTechLevel>Project tech level:</RqRI_ProjectTechLevel>
 	<RqRI_FactionTechLevel>Your faction tech level: </RqRI_FactionTechLevel>
 	<RqRI_ProjectCost>Project cost:</RqRI_ProjectCost>
 	<RqRI_ProjectCostMultiplied>Project cost multiplied by {0}:</RqRI_ProjectCostMultiplied>

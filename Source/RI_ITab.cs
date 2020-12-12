@@ -191,8 +191,8 @@ namespace ResearchInfo
 					if (_util.NumberOfCurrentResearchersOfGivenProject(_curProj) == 1 && Mouse.IsOver(rectResearchSpeed))
 					{
 						GUI.DrawTexture(rectResearchSpeed, TexUI.HighlightTex);
-						TooltipHandler.TipRegion(rectResearchSpeed, "RqRI_ResearchSpeedSoloDesc".Translate(_userpawn.NameShortColored)
-							+ _util.ToolTipResearchSpeedDetails(_curProj, _userpawn));
+						TooltipHandler.TipRegion(rectResearchSpeed, "RqRI_ResearchSpeedSoloDesc".Translate(_util.ListOfOfCurrentResearchers().First().NameShortColored)
+							+ _util.ToolTipResearchSpeedDetails(_curProj, _util.ListOfOfCurrentResearchers().First()));
 					}
 					if (_util.NumberOfCurrentResearchersOfGivenProject(_curProj) > 1 && Mouse.IsOver(rectResearchSpeed))
 					{
