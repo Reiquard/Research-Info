@@ -16,7 +16,7 @@ namespace ResearchInfo
             if (study)
             {
                 string text = string.Empty;
-                Pawn pawn = ListOfOfCurrentResearchers(study: true).Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
+                Pawn pawn = ListOfCurrentResearchers(study: true).Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
                 if (pawn != null)
                 {
                     curProj = Aux_HR.HRCurrentProject(pawn);
@@ -53,7 +53,7 @@ namespace ResearchInfo
             if (ResearchInfo.modHumanResources)
             {
                 string text = "RqRI_NotCurrentlyInUse".Translate();
-                Pawn pawn = ListOfOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
+                Pawn pawn = ListOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
                 if (pawn != null)
                 {
                     curProj = Aux_HR.HRCurrentProject(pawn);
@@ -69,7 +69,7 @@ namespace ResearchInfo
             if (ResearchInfo.modPawnsChooseResearch && !ResearchInfo.modHumanResources)
             {
                 string text = "RqRI_NotCurrentlyInUse".Translate();
-                Pawn pawn = ListOfOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
+                Pawn pawn = ListOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
                 if (pawn != null)
                 {
                     curProj = Aux_PCR.PCRCurrentProject(pawn);
@@ -86,7 +86,7 @@ namespace ResearchInfo
             }
             return string.Empty;
         }
-        public List<Pawn> ListOfOfCurrentResearchers(bool study = false)
+        public List<Pawn> ListOfCurrentResearchers(bool study = false)
         {
             if (ResearchInfo.modHumanResources)
             {
@@ -98,13 +98,23 @@ namespace ResearchInfo
                         Where(x => x.CurJobDef == Aux_HR.ResearchTech && x.Position == x.CurJob.targetA.Thing.InteractionCell).ToList();
             }
             else
-                return PawnsFinder.AllMaps_FreeColonistsSpawned.
-                    Where(x => x.CurJobDef == JobDefOf.Research && x.Position == x.CurJob.targetA.Thing.InteractionCell).ToList();
+            {
+                if (ResearchInfo.modHospitality)
+                {
+                    return PawnsFinder.AllMaps_Spawned.
+                        Where(x => x.CurJobDef == JobDefOf.Research && x.Position == x.CurJob.targetA.Thing.InteractionCell).ToList();
+                }
+                else
+                {
+                    return PawnsFinder.AllMaps_FreeColonistsSpawned.
+                        Where(x => x.CurJobDef == JobDefOf.Research && x.Position == x.CurJob.targetA.Thing.InteractionCell).ToList();
+                }
+            }
         }
         public float ResearchSpeedForGivenProject(ResearchProjectDef curProj, Pawn pawn)
         {
             if (ResearchInfo.clean)
-                return ListOfOfCurrentResearchers().
+                return ListOfCurrentResearchers().
                     Select(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)).
                     Sum();
             if (ResearchInfo.modHumanResources)
@@ -115,7 +125,7 @@ namespace ResearchInfo
                     / curProj.CostFactor(Aux_HR.HRTechLevel(pawn));
             }
             if (ResearchInfo.modPawnsChooseResearch && !ResearchInfo.modHumanResources)
-                return ListOfOfCurrentResearchers().
+                return ListOfCurrentResearchers().
                     Where(p => Aux_PCR.PCRCurrentProject(p) == curProj).
                     Select(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)).
                     Sum();
@@ -124,9 +134,9 @@ namespace ResearchInfo
         public byte NumberOfCurrentResearchersOfGivenProject(ResearchProjectDef curProj)
         {
             if (ResearchInfo.clean)
-                return (byte)ListOfOfCurrentResearchers().Count;
+                return (byte)ListOfCurrentResearchers().Count;
             if (ResearchInfo.modPawnsChooseResearch && !ResearchInfo.modHumanResources)
-                return (byte)ListOfOfCurrentResearchers().Where(p => Aux_PCR.PCRCurrentProject(p) == curProj).Count();
+                return (byte)ListOfCurrentResearchers().Where(p => Aux_PCR.PCRCurrentProject(p) == curProj).Count();
             return 0;
         }
         public string TimeToCompleteResearch(ResearchProjectDef curProj, Pawn pawn = null)
@@ -162,11 +172,11 @@ namespace ResearchInfo
         {
             Dictionary<float, Pawn> d = new Dictionary<float, Pawn>();
             if (ResearchInfo.clean)
-                d = ListOfOfCurrentResearchers().
+                d = ListOfCurrentResearchers().
                     OrderByDescending(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)).
                     ToDictionary(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor));
             if (ResearchInfo.modPawnsChooseResearch && !ResearchInfo.modHumanResources)
-                d = ListOfOfCurrentResearchers().
+                d = ListOfCurrentResearchers().
                     Where(p => Aux_PCR.PCRCurrentProject(p) == curProj).
                     OrderByDescending(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)).
                     ToDictionary(p => p.GetStatValue(StatDefOf.ResearchSpeed) * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor));

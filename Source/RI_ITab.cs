@@ -9,7 +9,7 @@ namespace ResearchInfo
 	{
 		private Utilities _util = new Utilities();
 		private Vector2 _scrollPosition = Vector2.zero;
-		private Pawn _userpawn => _util.ListOfOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == SelThing).FirstOrDefault();
+		private Pawn _userpawn => _util.ListOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == SelThing).FirstOrDefault();
 		private ResearchProjectDef _curProj => GetCurProj();
 		public override bool IsVisible => Visible();
 		private bool _HR_TechLevelDifference => ResearchInfo.modHumanResources && (_curProj.CostFactor(Aux_HR.HRTechLevel(_userpawn)) != 1f);
@@ -191,8 +191,9 @@ namespace ResearchInfo
 					if (_util.NumberOfCurrentResearchersOfGivenProject(_curProj) == 1 && Mouse.IsOver(rectResearchSpeed))
 					{
 						GUI.DrawTexture(rectResearchSpeed, TexUI.HighlightTex);
-						TooltipHandler.TipRegion(rectResearchSpeed, "RqRI_ResearchSpeedSoloDesc".Translate(_util.ListOfOfCurrentResearchers().First().NameShortColored)
-							+ _util.ToolTipResearchSpeedDetails(_curProj, _util.ListOfOfCurrentResearchers().First()));
+						var user = ResearchInfo.modPawnsChooseResearch ? _userpawn : _util.ListOfCurrentResearchers().First();
+						TooltipHandler.TipRegion(rectResearchSpeed, "RqRI_ResearchSpeedSoloDesc".Translate(user.NameShortColored)
+							+ _util.ToolTipResearchSpeedDetails(_curProj, user));
 					}
 					if (_util.NumberOfCurrentResearchersOfGivenProject(_curProj) > 1 && Mouse.IsOver(rectResearchSpeed))
 					{

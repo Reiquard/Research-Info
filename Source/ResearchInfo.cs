@@ -9,8 +9,8 @@ namespace ResearchInfo
 		public static bool clean = true;
 		public static bool modPawnsChooseResearch;
 		public static bool modHumanResources;
+		public static bool modHospitality;
 		public static Harmony Instance = new Harmony("reiquard.researchinfo");
-		private static string _message;
 		static ResearchInfo()
 		{
 			Instance.PatchAll();
@@ -18,15 +18,16 @@ namespace ResearchInfo
 			{
 				clean = false;
 				modPawnsChooseResearch = true;
-				_message = "'Pawns Choose Research'.";
 			}
 			if (ModLister.GetActiveModWithIdentifier("JPT.HumanResources") != null)
 			{
 				clean = false;
 				modHumanResources = true;
-				_message = "'Human Resources'.";
 			}
-			Log.Message("[Research Info] Changing logic to support " + _message);
+			if (ModLister.GetActiveModWithIdentifier("Orion.Hospitality") != null)
+			{
+				modHospitality = true;
+			}
 		}
 	}
 }
