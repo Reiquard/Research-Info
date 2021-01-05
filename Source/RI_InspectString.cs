@@ -20,7 +20,7 @@ namespace ResearchInfo
                 sb.AppendInNewLine(__result);
                 __result = sb.ToString();
             }
-            if (ResearchInfo.modHumanResources && __instance.def.defName == "StudyDesk")
+            if (ResearchInfo.ModHumanResources && __instance.def.defName == "StudyDesk")
             {
                 StringBuilder sb = new StringBuilder();
                 sb.Append(_util.InspectStringInfo(__instance, study: true));

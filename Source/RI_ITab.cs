@@ -12,8 +12,8 @@ namespace ResearchInfo
 		private Pawn _userpawn => _util.ListOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == SelThing).FirstOrDefault();
 		private ResearchProjectDef _curProj => GetCurProj();
 		public override bool IsVisible => Visible();
-		private bool _HR_TechLevelDifference => ResearchInfo.modHumanResources && (_curProj.CostFactor(Aux_HR.HRTechLevel(_userpawn)) != 1f);
-		private bool _HR_PrerequisiteMultiplier => ResearchInfo.modHumanResources && (Aux_HR.HRPrerequisiteMultiplier(_curProj, _userpawn) != 1f);
+		private bool _HR_TechLevelDifference => ResearchInfo.ModHumanResources && (_curProj.CostFactor(Aux_HR.HRTechLevel(_userpawn)) != 1f);
+		private bool _HR_PrerequisiteMultiplier => ResearchInfo.ModHumanResources && (Aux_HR.HRPrerequisiteMultiplier(_curProj, _userpawn) != 1f);
 
 		protected override void UpdateSize()
 		{
@@ -24,19 +24,19 @@ namespace ResearchInfo
 
 		private ResearchProjectDef GetCurProj()
 		{
-			if (ResearchInfo.clean)
+			if (ResearchInfo.Clean)
 				return Find.ResearchManager.currentProj;
-			if (_userpawn != null && ResearchInfo.modHumanResources)
+			if (_userpawn != null && ResearchInfo.ModHumanResources)
 				return Aux_HR.HRCurrentProject(_userpawn);
-			if (_userpawn != null && ResearchInfo.modPawnsChooseResearch && !ResearchInfo.modHumanResources)
+			if (_userpawn != null && ResearchInfo.ModPawnsChooseResearch && !ResearchInfo.ModHumanResources && !Aux_PCR.VersionMismatch)
 				return Aux_PCR.PCRCurrentProject(_userpawn);
 			return null;
 		}
 		private bool Visible()
 		{
-			if (_curProj != null && ResearchInfo.clean)
+			if (_curProj != null && ResearchInfo.Clean)
 				return true;
-			if (_curProj != null && (ResearchInfo.modHumanResources || ResearchInfo.modPawnsChooseResearch))
+			if (_curProj != null && (ResearchInfo.ModHumanResources || ResearchInfo.ModPawnsChooseResearch))
 				return _userpawn != null;
 			return false;
 		}
@@ -133,7 +133,7 @@ namespace ResearchInfo
 			Text.Anchor = TextAnchor.MiddleLeft;
 			Widgets.Label(rectResearchProgress, "RqRI_ResearchProgress".Translate());
 			Text.Anchor = TextAnchor.MiddleRight;
-			if (ResearchInfo.modHumanResources)
+			if (ResearchInfo.ModHumanResources)
 			{
 				Widgets.Label(rectResearchProgress, Aux_HR.HRExpertise(_userpawn)[_curProj].ToStringPercent("F1"));
 			}
@@ -181,7 +181,7 @@ namespace ResearchInfo
 
 			Rect rectResearchSpeed = new Rect(0f, stringPos, rectProjectDetails.width, stringHeight);
 			Text.Anchor = TextAnchor.MiddleLeft;
-			if (!ResearchInfo.modHumanResources)
+			if (!ResearchInfo.ModHumanResources)
 			{
 				if (_util.NumberOfCurrentResearchersOfGivenProject(_curProj) > 0)
 				{
@@ -191,7 +191,7 @@ namespace ResearchInfo
 					if (_util.NumberOfCurrentResearchersOfGivenProject(_curProj) == 1 && Mouse.IsOver(rectResearchSpeed))
 					{
 						GUI.DrawTexture(rectResearchSpeed, TexUI.HighlightTex);
-						var user = ResearchInfo.modPawnsChooseResearch ? _userpawn : _util.ListOfCurrentResearchers().First();
+						var user = ResearchInfo.ModPawnsChooseResearch ? _userpawn : _util.ListOfCurrentResearchers().First();
 						TooltipHandler.TipRegion(rectResearchSpeed, "RqRI_ResearchSpeedSoloDesc".Translate(user.NameShortColored)
 							+ _util.ToolTipResearchSpeedDetails(_curProj, user));
 					}

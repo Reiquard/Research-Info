@@ -26,14 +26,12 @@ namespace ResearchInfo
 			return HRExpertise(pawn).Keys.Where(x => x.HRIsKnownBy(pawn)).Where(x => !x.prerequisites.NullOrEmpty() && x.prerequisites.Contains(project)).Any() ? 2f : 1f;
 		}
 
-
 		private static Type _JobDriver_LearnTech = AccessTools.TypeByName("HumanResources.JobDriver_LearnTech");
 		private static FieldInfo _projectFI = AccessTools.Field(_JobDriver_LearnTech, "project");
 		public static ResearchProjectDef HRCurrentProject(Pawn pawn)
 		{
 			return _JobDriver_LearnTech.IsAssignableFrom(pawn.jobs.curDriver.GetType()) ? (ResearchProjectDef)_projectFI.GetValue(pawn.jobs.curDriver) : null;
 		}
-
 
 		private static Type _Extension_Research = AccessTools.TypeByName("HumanResources.Extension_Research");
 		private static PropertyInfo _ResearchPointsPerWorkTickPI = AccessTools.Property(_Extension_Research, "ResearchPointsPerWorkTick");
@@ -50,7 +48,6 @@ namespace ResearchInfo
 		{
 			return (bool)_IsKnownByMI.Invoke(_Extension_Research, new Object[] { project, pawn });
 		}
-
 
 		private static Type _TechJobDefOf = AccessTools.TypeByName("HumanResources.TechJobDefOf");
 		private static FieldInfo _ResearchTechFI = AccessTools.Field(_TechJobDefOf, "ResearchTech");
