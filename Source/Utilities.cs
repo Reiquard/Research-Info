@@ -15,18 +15,14 @@ namespace ResearchInfo
             ResearchProjectDef curProj;
             if (study)
             {
-                string text = string.Empty;
                 Pawn pawn = ListOfCurrentResearchers(study: true).Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
                 if (pawn != null)
                 {
                     curProj = Aux_HR.HRCurrentProject(pawn);
-                    text = "RqRI_CurrentProject".Translate() + curProj.LabelCap;
-                    text += "\n";
-                    text += "RqRI_LearningProgress".Translate() + Aux_HR.HRExpertise(pawn)[curProj].ToStringPercent("F0");
-                    text += "\n";
-                    text += "RqRI_TimeToComplete".Translate() + TimeToCompleteLearning(curProj, pawn);
+                    sb.AppendLine("RqRI_CurrentProject".Translate() + curProj.LabelCap);
+                    sb.AppendLine("RqRI_LearningProgress".Translate() + Aux_HR.HRExpertise(pawn)[curProj].ToStringPercent("F0"));
+                    sb.Append("RqRI_TimeToComplete".Translate() + TimeToCompleteLearning(curProj, pawn));
                 }
-                sb.Append(text);
                 return sb.ToString();
             }
             if (ResearchInfo.Clean)
@@ -52,42 +48,39 @@ namespace ResearchInfo
             }
             if (ResearchInfo.ModHumanResources)
             {
-                string text = "RqRI_NotCurrentlyInUse".Translate();
                 Pawn pawn = ListOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
                 if (pawn != null)
                 {
                     curProj = Aux_HR.HRCurrentProject(pawn);
-                    text = "RqRI_CurrentProject".Translate() + curProj.LabelCap;
-                    text += "\n";
-                    text += "RqRI_ResearchProgress".Translate() + Aux_HR.HRExpertise(pawn)[curProj].ToStringPercent("F1");
-                    text += "\n";
-                    text += "RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj, pawn);
+                    sb.AppendLine("RqRI_CurrentProject".Translate() + curProj.LabelCap);
+                    sb.AppendLine("RqRI_ResearchProgress".Translate() + Aux_HR.HRExpertise(pawn)[curProj].ToStringPercent("F1"));
+                    sb.Append("RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj, pawn));
                 }
-                sb.Append(text);
+                else
+                {
+                    sb.Append("RqRI_NotCurrentlyInUse".Translate());
+                }
                 return sb.ToString();
             }
             if (ResearchInfo.ModPawnsChooseResearch && !ResearchInfo.ModHumanResources)
             {
-                string text = "RqRI_NotCurrentlyInUse".Translate();
                 if (Aux_PCR.VersionMismatch)
                 {
-                    text = "You are using an incompatible version of the 'Pawns Choose Research' mod.";
-                    sb.Append(text);
+                    sb.Append("You are using an incompatible version of the 'Pawns Choose Research' mod.");
                     return sb.ToString();
                 }
                 Pawn pawn = ListOfCurrentResearchers().Where(x => x.CurJob.targetA.Thing == thing).FirstOrDefault();
                 if (pawn != null)
                 {
                     curProj = Aux_PCR.PCRCurrentProject(pawn);
-                    text = "RqRI_CurrentProject".Translate() + curProj.LabelCap;
-                    text += "\n";
-                    text += "RqRI_ResearchProgress".Translate() + 
-                        curProj.ProgressApparent.ToString("F0") + " / " + 
-                        curProj.CostApparent.ToString("F0") + $" ({curProj.ProgressPercent.ToStringPercent("F1")})";
-                    text += "\n";
-                    text += "RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj);
+                    sb.AppendLine("RqRI_CurrentProject".Translate() + curProj.LabelCap);
+                    sb.AppendLine("RqRI_ResearchProgress".Translate() + $"{curProj.ProgressApparent.ToString("F0")} / {curProj.CostApparent.ToString("F0")} ({curProj.ProgressPercent.ToStringPercent("F1")})");
+                    sb.Append("RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj));
                 }
-                sb.Append(text);
+                else
+                {
+                    sb.Append("RqRI_NotCurrentlyInUse".Translate());
+                }
                 return sb.ToString();
             }
             return string.Empty;
@@ -128,6 +121,7 @@ namespace ResearchInfo
                 return pawn.GetStatValue(StatDefOf.ResearchSpeed)
                     * pawn.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)
                     * Aux_HR.HRPrerequisiteMultiplier(curProj, pawn)
+                    * pawn.GetStatValue(StatDefOf.GlobalLearningFactor)
                     / curProj.CostFactor(Aux_HR.HRTechLevel(pawn));
             }
             if (ResearchInfo.ModPawnsChooseResearch && !ResearchInfo.ModHumanResources)
@@ -195,15 +189,16 @@ namespace ResearchInfo
         }
         public string ToolTipResearchSpeedDetails(ResearchProjectDef project, Pawn pawn)
         {
-            string text = string.Empty;
-            text += $"\n{(pawn.GetStatValue(StatDefOf.ResearchSpeed).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_Researcher".Translate()).Truncate(260f)}";
-            text += $"\n{(pawn.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_ResearchBench".Translate()).Truncate(260f)}";
+            StringBuilder sb = new StringBuilder();
+            sb.Append($"\n{(pawn.GetStatValue(StatDefOf.ResearchSpeed).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_Researcher".Translate()).Truncate(260f)}");
             if (ResearchInfo.ModHumanResources)
             {
-                text += Aux_HR.HRPrerequisiteMultiplier(project, pawn) != 1f ? $"\n{(Aux_HR.HRPrerequisiteMultiplier(project, pawn).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_PrerequisiteMultiplier".Translate()).Truncate(260f)}" : "";
-                text += project.CostFactor(Aux_HR.HRTechLevel(pawn)) != 1f ? $"\n{((1 / project.CostFactor(Aux_HR.HRTechLevel(pawn))).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_TechLevelMultiplier".Translate()).Truncate(260f)}" : "";
+                sb.Append(pawn.GetStatValue(StatDefOf.GlobalLearningFactor) != 1f ? $"\n{(pawn.GetStatValue(StatDefOf.GlobalLearningFactor).ToStringPercent("F0") + " - " + StatDefOf.GlobalLearningFactor.LabelCap).Truncate(260f)}" : "");
+                sb.Append(Aux_HR.HRPrerequisiteMultiplier(project, pawn) != 1f ? $"\n{(Aux_HR.HRPrerequisiteMultiplier(project, pawn).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_PrerequisiteMultiplier".Translate()).Truncate(260f)}" : "");
+                sb.Append(project.CostFactor(Aux_HR.HRTechLevel(pawn)) != 1f ? $"\n{((1 / project.CostFactor(Aux_HR.HRTechLevel(pawn))).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_TechLevelMultiplier".Translate()).Truncate(260f)}" : "");
             }
-            return text;
+            sb.Append($"\n{(pawn.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor).ToStringPercent("F0") + " - " + "RqRI_ToolTipDetails_ResearchBench".Translate()).Truncate(260f)}");
+            return sb.ToString();
         }
     }
 }
