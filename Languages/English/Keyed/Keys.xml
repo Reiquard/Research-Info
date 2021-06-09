@@ -16,6 +16,10 @@
 	<RqRI_TimeToComplete>Estimated time to complete: </RqRI_TimeToComplete>
 	<RqRI_TimeToCompleteDesc>Time required to complete this research under current conditions.</RqRI_TimeToCompleteDesc>
 	
+	<RqRI_Settings_ShowCurrentProject>Show current project</RqRI_Settings_ShowCurrentProject>
+	<RqRI_Settings_ShowResearchProgress>Show research progress</RqRI_Settings_ShowResearchProgress>
+	<RqRI_Settings_ShowTimeToComplete>Show time to complete</RqRI_Settings_ShowTimeToComplete>
+
 	<!-- Compatibility strings with other mods -->
 	<RqRI_NotCurrentlyInUse>This research bench is not currently in use.</RqRI_NotCurrentlyInUse><!-- InspectString -->
 	<RqRI_TechLevelDifference>Research speed multiplier due to complexity:</RqRI_TechLevelDifference>

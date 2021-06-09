@@ -16,6 +16,10 @@
 	<RqRI_TimeToComplete>Ожидаемое время завершения: </RqRI_TimeToComplete>
 	<RqRI_TimeToCompleteDesc>Время, необходимое для завершения этого исследования при текущих условиях.</RqRI_TimeToCompleteDesc>
 
+	<RqRI_Settings_ShowCurrentProject>Отображать текущий проект</RqRI_Settings_ShowCurrentProject>
+	<RqRI_Settings_ShowResearchProgress>Отображать прогресс исследования</RqRI_Settings_ShowResearchProgress>
+	<RqRI_Settings_ShowTimeToComplete>Отображать ожидаемое время завершения</RqRI_Settings_ShowTimeToComplete>
+
 	<!-- Compatibility strings with other mods -->
 	<RqRI_NotCurrentlyInUse>Этот стол для исследований пока не используется.</RqRI_NotCurrentlyInUse>
 	<RqRI_TechLevelDifference>Множитель скорости из-за сложности:</RqRI_TechLevelDifference>

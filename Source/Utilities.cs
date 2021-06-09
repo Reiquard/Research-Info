@@ -19,30 +19,20 @@ namespace ResearchInfo
                 if (pawn != null)
                 {
                     curProj = Aux_HR.HRCurrentProject(pawn);
-                    sb.AppendLine("RqRI_CurrentProject".Translate() + curProj.LabelCap);
-                    sb.AppendLine("RqRI_LearningProgress".Translate() + Aux_HR.HRExpertise(pawn)[curProj].ToStringPercent("F0"));
-                    sb.Append("RqRI_TimeToComplete".Translate() + TimeToCompleteLearning(curProj, pawn));
+                    sb.AppendInNewLine(RI_Mod.settings.showCurrentProject ? $"{"RqRI_CurrentProject".Translate() + curProj.LabelCap}" : "");
+                    sb.AppendInNewLine(RI_Mod.settings.showResearchProgress ? $"{"RqRI_LearningProgress".Translate() + Aux_HR.HRExpertise(pawn)[curProj].ToStringPercent("F0")}" : "");
+                    sb.AppendInNewLine(RI_Mod.settings.showTimeToComplete ? $"{"RqRI_TimeToComplete".Translate() + TimeToCompleteLearning(curProj, pawn)}" : "");
                 }
                 return sb.ToString();
             }
             if (ResearchInfo.Clean)
             {
                 curProj = Find.ResearchManager.currentProj;
-                sb.Append("RqRI_CurrentProject".Translate());
+                sb.AppendInNewLine(RI_Mod.settings.showCurrentProject ? $"{"RqRI_CurrentProject".Translate() + (curProj != null ? curProj.LabelCap : "None".Translate())}" : "");
                 if (curProj != null)
                 {
-                    sb.Append(curProj.LabelCap);
-                    sb.AppendInNewLine("RqRI_ResearchProgress".Translate() + 
-                        curProj.ProgressApparent.ToString("F0") + " / " + 
-                        curProj.CostApparent.ToString("F0") + $" ({curProj.ProgressPercent.ToStringPercent("F1")})");
-                    if (TimeToCompleteResearch(curProj) != "-")
-                    {
-                        sb.AppendInNewLine("RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj));
-                    }
-                }
-                else
-                {
-                    sb.Append("None".Translate());
+                    sb.AppendInNewLine(RI_Mod.settings.showResearchProgress ? $"{"RqRI_ResearchProgress".Translate() + curProj.ProgressApparent.ToString("F0") + " / " + curProj.CostApparent.ToString("F0") + $" ({curProj.ProgressPercent.ToStringPercent("F1")})"}" : "");
+                    sb.AppendInNewLine(RI_Mod.settings.showTimeToComplete && TimeToCompleteResearch(curProj) != "-" ? $"{"RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj)}" : "");
                 }
                 return sb.ToString();
             }
@@ -52,9 +42,9 @@ namespace ResearchInfo
                 if (pawn != null)
                 {
                     curProj = Aux_HR.HRCurrentProject(pawn);
-                    sb.AppendLine("RqRI_CurrentProject".Translate() + curProj.LabelCap);
-                    sb.AppendLine("RqRI_ResearchProgress".Translate() + Aux_HR.HRExpertise(pawn)[curProj].ToStringPercent("F1"));
-                    sb.Append("RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj, pawn));
+                    sb.AppendInNewLine(RI_Mod.settings.showCurrentProject ? $"{"RqRI_CurrentProject".Translate() + curProj.LabelCap}" : "");
+                    sb.AppendInNewLine(RI_Mod.settings.showResearchProgress ? $"{"RqRI_ResearchProgress".Translate() + Aux_HR.HRExpertise(pawn)[curProj].ToStringPercent("F1")}" : "");
+                    sb.AppendInNewLine(RI_Mod.settings.showTimeToComplete ? $"{"RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj, pawn)}" : "");
                 }
                 else
                 {
@@ -73,9 +63,12 @@ namespace ResearchInfo
                 if (pawn != null)
                 {
                     curProj = Aux_PCR.PCRCurrentProject(pawn);
-                    sb.AppendLine("RqRI_CurrentProject".Translate() + curProj.LabelCap);
-                    sb.AppendLine("RqRI_ResearchProgress".Translate() + $"{curProj.ProgressApparent.ToString("F0")} / {curProj.CostApparent.ToString("F0")} ({curProj.ProgressPercent.ToStringPercent("F1")})");
-                    sb.Append("RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj));
+                    if (curProj != null)
+                    {
+                        sb.AppendInNewLine(RI_Mod.settings.showCurrentProject ? $"{"RqRI_CurrentProject".Translate() + curProj.LabelCap}" : "");
+                        sb.AppendInNewLine(RI_Mod.settings.showResearchProgress ? $"{"RqRI_ResearchProgress".Translate() + $"{curProj.ProgressApparent.ToString("F0")} / {curProj.CostApparent.ToString("F0")} ({curProj.ProgressPercent.ToStringPercent("F1")})"}" : "");
+                        sb.AppendInNewLine(RI_Mod.settings.showTimeToComplete ? $"{"RqRI_TimeToComplete".Translate() + TimeToCompleteResearch(curProj)}" : "");
+                    }
                 }
                 else
                 {
