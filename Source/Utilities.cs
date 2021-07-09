@@ -140,12 +140,12 @@ namespace ResearchInfo
             if (ResearchInfo.ModHumanResources)
             {
                 hoursToComplete = ((1 - Aux_HR.HRExpertise(pawn)[curProj]) * curProj.CostApparent /
-                    (ResearchSpeedForGivenProject(curProj, pawn) * curProj.CostFactor(pawn.Faction.def.techLevel) * Aux_HR.HRResearchPointsPerWorkTick * 2500 * (DebugSettings.fastResearch ? 500f : 1f)));
+                    (ResearchSpeedForGivenProject(curProj, pawn) * curProj.CostFactor(pawn.Faction.def.techLevel) * Aux_HR.HRResearchPointsPerWorkTick * 2500f * (DebugSettings.fastResearch ? 500f : 1f)));
             }
             else
             {
                 hoursToComplete = (curProj.CostApparent - curProj.ProgressApparent) /
-                    (ResearchSpeedForGivenProject(curProj, pawn) * 0.00825f * 2500 * Find.Storyteller.difficultyValues.researchSpeedFactor * (DebugSettings.fastResearch ? 500f : 1f));
+                    (ResearchSpeedForGivenProject(curProj, pawn) * 0.00825f * 2500f * Find.Storyteller.difficulty.researchSpeedFactor * (DebugSettings.fastResearch ? 500f : 1f));
             }
             TimeSpan time = TimeSpan.FromHours(hoursToComplete);
             return (time.Days > 0 ? $"{time.Days.ToString() + "LetterDay".Translate()} " : "") +
@@ -155,7 +155,7 @@ namespace ResearchInfo
         public string TimeToCompleteLearning(ResearchProjectDef curProj, Pawn pawn = null)
         {
             float hoursToComplete = ((1 - Aux_HR.HRExpertise(pawn)[curProj]) * pawn.CurJob.bill.recipe.workAmount * Aux_HR.HRStuffCostFactor(curProj) /
-                (ResearchSpeedForGivenProject(curProj, pawn) * Aux_HR.HRStudyPointsPerWorkTick * 2500 * (DebugSettings.fastResearch ? 500f : 1f)));
+                (ResearchSpeedForGivenProject(curProj, pawn) * Aux_HR.HRStudyPointsPerWorkTick * 2500f * (DebugSettings.fastResearch ? 500f : 1f)));
             TimeSpan time = TimeSpan.FromHours(hoursToComplete);
             return (time.Days > 0 ? $"{time.Days.ToString() + "LetterDay".Translate()} " : "") +
                 (time.Hours > 0 ? $"{time.Hours.ToString() + "LetterHour".Translate()} " : "") +

@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>D:\Program Files\Steam\steamapps\common\RimWorld\Mods\RqResearchInfo\Assemblies\</OutputPath>
+    <OutputPath>D:\Program Files\Steam\steamapps\common\RimWorld\Mods\RqResearchInfo\1.3\Assemblies\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
