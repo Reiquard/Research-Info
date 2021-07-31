@@ -1,33 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <RqRI_ITab_Label>프로젝트</RqRI_ITab_Label>
-  <RqRI_CurrentProject>현재 프로젝트: </RqRI_CurrentProject>
-  <RqRI_ResearchProgress>연구 진행 상황: </RqRI_ResearchProgress>
-  <RqRI_ProjectTechLevel>프로젝트 기술 수준:</RqRI_ProjectTechLevel>
-  <RqRI_FactionTechLevel>세력 기술 수준: </RqRI_FactionTechLevel>
-  <RqRI_ProjectCost>연구 비용:</RqRI_ProjectCost>
-  <RqRI_ProjectCostMultiplied>연구 비용이 {0}만큼 곱해짐:</RqRI_ProjectCostMultiplied>
-  <RqRI_ResearchSpeed>현재 연구 속도:</RqRI_ResearchSpeed>
-  <RqRI_ResearchSpeedSoloDesc>{0}의 현재 연구 속도:\n</RqRI_ResearchSpeedSoloDesc>
-  <RqRI_ToolTipDetails_Researcher>연구원 효율</RqRI_ToolTipDetails_Researcher><!-- Tooltip -->
-  <RqRI_ToolTipDetails_ResearchBench>연구 작업대 수치</RqRI_ToolTipDetails_ResearchBench><!-- Tooltip -->
-  <RqRI_ResearchSpeedMultipleDesc>폰들의 현재 연구 속도:\n</RqRI_ResearchSpeedMultipleDesc>
-  <RqRI_TimeToComplete>완료까지 예상 시간: </RqRI_TimeToComplete>
-  <RqRI_TimeToCompleteDesc>현재 조건에서 연구를 완료할 때까지 걸리는 시간입니다.</RqRI_TimeToCompleteDesc>
+	<RqRI_ITab_Label>프로젝트</RqRI_ITab_Label>
+	<RqRI_CurrentProject>현재 프로젝트: </RqRI_CurrentProject>
+	<RqRI_ResearchProgress>연구 진행 상황: </RqRI_ResearchProgress>
+	<RqRI_ProjectTechLevel>프로젝트 기술 수준:</RqRI_ProjectTechLevel>
+	<RqRI_FactionTechLevel>세력 기술 수준: </RqRI_FactionTechLevel>
+	<RqRI_ProjectCost>연구 비용:</RqRI_ProjectCost>
+	<RqRI_ProjectCostMultiplied>연구 비용이 {0}만큼 곱해짐:</RqRI_ProjectCostMultiplied>
+	<RqRI_ResearchSpeed>현재 연구 속도:</RqRI_ResearchSpeed>
+	<RqRI_ResearchSpeedSoloDesc>{0}의 현재 연구 속도:\n</RqRI_ResearchSpeedSoloDesc>
+	<RqRI_ToolTipDetails_Researcher>연구원 효율</RqRI_ToolTipDetails_Researcher><!-- Tooltip -->
+	<RqRI_ToolTipDetails_ResearchBench>연구 작업대 수치</RqRI_ToolTipDetails_ResearchBench><!-- Tooltip -->
+	<RqRI_ResearchSpeedMultipleDesc>폰들의 현재 연구 속도:\n</RqRI_ResearchSpeedMultipleDesc>
+	<RqRI_TimeToComplete>완료까지 예상 시간: </RqRI_TimeToComplete>
+	<RqRI_TimeToCompleteDesc>현재 조건에서 연구를 완료할 때까지 걸리는 시간입니다.</RqRI_TimeToCompleteDesc>
 
-  <RqRI_Settings_ShowCurrentProject>현재 프로젝트 보이기</RqRI_Settings_ShowCurrentProject>
-  <RqRI_Settings_ShowResearchProgress>연구 진행 상황 보이기</RqRI_Settings_ShowResearchProgress>
-  <RqRI_Settings_ShowTimeToComplete>완료까지 걸리는 시간 보이기</RqRI_Settings_ShowTimeToComplete>
+	<RqRI_Settings_ShowCurrentProject>현재 프로젝트 보이기</RqRI_Settings_ShowCurrentProject>
+	<RqRI_Settings_ShowResearchProgress>연구 진행 상황 보이기</RqRI_Settings_ShowResearchProgress>
+	<RqRI_Settings_ShowTimeToComplete>완료까지 걸리는 시간 보이기</RqRI_Settings_ShowTimeToComplete>
 
-  <!-- Compatibility strings with other mods -->
-  <RqRI_NotCurrentlyInUse>이 연구 작업대는 현재 사용 중이지 않습니다.</RqRI_NotCurrentlyInUse><!-- InspectString -->
-  <RqRI_TechLevelDifference>복잡도로 인한 연구 시간 배수:</RqRI_TechLevelDifference>
-  <RqRI_TechLevelDifferenceDesc>{0}의 지식은 {1} 수준이지만, 이 프로젝트는 {2} 수준입니다.</RqRI_TechLevelDifferenceDesc>
-  <RqRI_ToolTipDetails_TechLevelMultiplier>연구 복잡도</RqRI_ToolTipDetails_TechLevelMultiplier><!-- Tooltip -->
-  <RqRI_PrerequisiteMultiplier>관련된 지식으로 인한 연구 속도 배수:</RqRI_PrerequisiteMultiplier>
-  <RqRI_PrerequisiteMultiplierDesc>{0}은(는) 더 복잡한 관련 분야에 대한 지식이 있습니다.</RqRI_PrerequisiteMultiplierDesc>
-  <RqRI_ToolTipDetails_PrerequisiteMultiplier>관련 지식</RqRI_ToolTipDetails_PrerequisiteMultiplier><!-- Tooltip -->
-  <RqRI_LearningProgress>학습 진행 상황: </RqRI_LearningProgress><!-- InspectString -->
+	<!-- Compatibility strings with other mods -->
+	<RqRI_NotCurrentlyInUse>이 연구 작업대는 현재 사용 중이지 않습니다.</RqRI_NotCurrentlyInUse><!-- InspectString -->
+	<RqRI_TechLevelDifference>복잡도로 인한 연구 시간 배수:</RqRI_TechLevelDifference>
+	<RqRI_TechLevelDifferenceDesc>{0}의 지식은 {1} 수준이지만, 이 프로젝트는 {2} 수준입니다.</RqRI_TechLevelDifferenceDesc>
+	<RqRI_ToolTipDetails_TechLevelMultiplier>연구 복잡도</RqRI_ToolTipDetails_TechLevelMultiplier><!-- Tooltip -->
+	<RqRI_PrerequisiteMultiplier>관련된 지식으로 인한 연구 속도 배수:</RqRI_PrerequisiteMultiplier>
+	<RqRI_PrerequisiteMultiplierDesc>{0}은(는) 더 복잡한 관련 분야에 대한 지식이 있습니다.</RqRI_PrerequisiteMultiplierDesc>
+	<RqRI_ToolTipDetails_PrerequisiteMultiplier>관련 지식</RqRI_ToolTipDetails_PrerequisiteMultiplier><!-- Tooltip -->
+	<RqRI_LearningProgress>학습 진행 상황: </RqRI_LearningProgress><!-- InspectString -->
 
 </LanguageData>

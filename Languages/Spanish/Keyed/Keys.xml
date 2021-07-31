@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<LanguageData>
+ 
+    <RqRI_ITab_Label>Proyecto</RqRI_ITab_Label>
+    <RqRI_CurrentProject>Proyecto actual: </RqRI_CurrentProject>
+    <RqRI_ResearchProgress>Progreso de la investigación: </RqRI_ResearchProgress>
+    <RqRI_ProjectTechLevel>Nivel tecnológico del proyecto:</RqRI_ProjectTechLevel>
+    <RqRI_FactionTechLevel>Nivel tecnológico de tu facción: </RqRI_FactionTechLevel>
+    <RqRI_ProjectCost>Coste del proyecto:</RqRI_ProjectCost>
+    <RqRI_ProjectCostMultiplied>Coste del proyecto multiplicado por {0}:</RqRI_ProjectCostMultiplied>
+    <RqRI_ResearchSpeed>Velocidad de investigación actual:</RqRI_ResearchSpeed>
+    <RqRI_ResearchSpeedSoloDesc>La velocidad a la que {0} está realizando actualmente la investigación:\n</RqRI_ResearchSpeedSoloDesc>
+    <RqRI_ToolTipDetails_Researcher>Eficiencia del investigador</RqRI_ToolTipDetails_Researcher><!-- Tooltip -->
+    <RqRI_ToolTipDetails_ResearchBench>Factor de la mesa de investigación</RqRI_ToolTipDetails_ResearchBench><!-- Tooltip -->
+    <RqRI_ResearchSpeedMultipleDesc>La velocidad a la que estos colonos están realizando actualmente la investigación:\n</RqRI_ResearchSpeedMultipleDesc>
+    <RqRI_TimeToComplete>Tiempo estimado para completar: </RqRI_TimeToComplete>
+    <RqRI_TimeToCompleteDesc>Tiempo necesario para completar esta investigación en las condiciones actuales.</RqRI_TimeToCompleteDesc>
+   
+    <RqRI_Settings_ShowCurrentProject>Mostrar proyecto actual</RqRI_Settings_ShowCurrentProject>
+    <RqRI_Settings_ShowResearchProgress>Mostrar el progreso de la investigación</RqRI_Settings_ShowResearchProgress>
+    <RqRI_Settings_ShowTimeToComplete>Mostrar el tiempo para completar</RqRI_Settings_ShowTimeToComplete>
+ 
+    <!-- Compatibility strings with other mods -->
+    <RqRI_NotCurrentlyInUse>Esta mesa de investigación no está actualmente en uso.</RqRI_NotCurrentlyInUse><!-- InspectString -->
+    <RqRI_TechLevelDifference>Multiplicador de la velocidad de investigación debido a la complejidad:</RqRI_TechLevelDifference>
+    <RqRI_TechLevelDifferenceDesc>El conocimiento de {0} está en el nivel {1}, pero el nivel tecnológico de este proyecto es {2}.</RqRI_TechLevelDifferenceDesc>
+    <RqRI_ToolTipDetails_TechLevelMultiplier>Complejidad de la investigación</RqRI_ToolTipDetails_TechLevelMultiplier><!-- Tooltip -->
+    <RqRI_PrerequisiteMultiplier>Multiplicador de la velocidad de investigación debido a los conocimientos relacionados:</RqRI_PrerequisiteMultiplier>
+    <RqRI_PrerequisiteMultiplierDesc>{0} tiene conocimientos en campos asociados más complejos.</RqRI_PrerequisiteMultiplierDesc>
+    <RqRI_ToolTipDetails_PrerequisiteMultiplier>Conocimientos relacionados</RqRI_ToolTipDetails_PrerequisiteMultiplier><!-- Tooltip -->
+    <RqRI_LearningProgress>Progreso de aprendizaje: </RqRI_LearningProgress><!-- InspectString -->
+ 
+</LanguageData>
