@@ -142,18 +142,33 @@ namespace ResearchInfo
                     (ResearchSpeedForGivenProject(curProj, pawn) * 0.00825f * 2500f * Find.Storyteller.difficulty.researchSpeedFactor * (DebugSettings.fastResearch ? 500f : 1f));
             }
             TimeSpan time = TimeSpan.FromHours(hoursToComplete);
-            return (time.Days > 0 ? $"{time.Days.ToString() + "LetterDay".Translate()} " : "") +
-                (time.Hours > 0 ? $"{time.Hours.ToString() + "LetterHour".Translate()} " : "") +
-                ($"{time.Minutes.ToString() + "LetterMinute".Translate()}");
+            return TimeToString(time);
         }
         public string TimeToCompleteLearning(ResearchProjectDef curProj, Pawn pawn = null)
         {
             float hoursToComplete = ((1 - Aux_HR.HR_Expertise(pawn)[curProj]) * pawn.CurJob.bill.recipe.workAmount * Aux_HR.HR_StuffCostFactor(curProj) /
                 (ResearchSpeedForGivenProject(curProj, pawn) * Aux_HR.HR_StudyPointsPerWorkTick * 2500f * (DebugSettings.fastResearch ? 500f : 1f)));
             TimeSpan time = TimeSpan.FromHours(hoursToComplete);
-            return (time.Days > 0 ? $"{time.Days.ToString() + "LetterDay".Translate()} " : "") +
-                (time.Hours > 0 ? $"{time.Hours.ToString() + "LetterHour".Translate()} " : "") +
-                ($"{time.Minutes.ToString() + "LetterMinute".Translate()}");
+            return TimeToString(time);
+        }
+        private string TimeToString(TimeSpan time)
+        {
+            string s = "";
+            if (time.Days > 0)
+            {
+                s += $"{time.Days.ToString() + "LetterDay".Translate()} ";
+                s += $"{time.Hours.ToString() + "LetterHour".Translate()} ";
+                s += $"{time.Minutes.ToString() + "LetterMinute".Translate()}";
+            }
+            else
+            {
+                if (time.Hours > 0)
+                {
+                    s += $"{time.Hours.ToString() + "LetterHour".Translate()} ";
+                }
+                s += $"{time.Minutes.ToString() + "LetterMinute".Translate()}";
+            }
+            return s;
         }
         public string ToolTipNamesList(ResearchProjectDef curProj)
         {
