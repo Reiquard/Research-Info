@@ -97,7 +97,7 @@ namespace ResearchInfo
                 return ListOfCurrentResearchers().
                     Select(p => p.GetStatValue(StatDefOf.ResearchSpeed)
                     * p.CurJob.targetA.Thing.GetStatValue(StatDefOf.ResearchSpeedFactor)
-                    * Aux_RR.RR_ResearchSpeedMultiplier(p.CurJob)).Sum();
+                    * Aux_RR.RR_ResearchSpeedMultiplier()).Sum();
             }
             if (ResearchInfo.VanillaBehavior)
                 return ListOfCurrentResearchers().
